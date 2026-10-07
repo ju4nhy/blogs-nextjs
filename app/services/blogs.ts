@@ -12,8 +12,12 @@ const blogs = [
 
 let nextId = 4
 
-export const getBlogs = () => {
+export const getBlogs = (filter?: string) => {
+  const searchFilter = filter?.trim().toLowerCase() ?? ""
+
   return blogs
+    .filter((blog) => blog.title.toLowerCase().includes(searchFilter))
+    .sort((a, b) => b.likes - a.likes)
 }
 
 export const addBlog = (title: string, author: string, url: string, likes: number) => {
