@@ -14,7 +14,15 @@ export const getBlogs = async (filter?: string) => {
 }
 
 export const addBlog = async (title: string, author: string, url: string, likes: number) => {
-  await db.insert(blogs).values({ title, author, url, likes })
+  const user = await db.query.users.findFirst({
+    orderBy: sql`RANDOM()`,
+  })
+
+  if (!user) {
+    throw new Error("No users found")
+  }
+
+  await db.insert(blogs).values({ title, author, url, likes, userId: user.id })
 }
 
 export const getBlogById = async (id: number) => {
@@ -29,42 +37,3 @@ export const addLike = async (id: number) => {
     .set({ likes: sql`${blogs.likes} + 1` })
     .where(eq(blogs.id, id))
 }
-
-/*
-const blogs = [
-  { id: 1, title: "title", author: "author", url: "url", likes: 2 },
-  { id: 2, title: "another title", author: "another author", url: "anotherurl", likes: 0},
-  {
-    id: 3,
-    title: "testTitle",
-    author: "testAuthor",
-    url: "testUrl",
-    likes: 1
-  },
-]
-
-
-export const getBlogs = (filter?: string) => {
-  const searchFilter = filter?.trim().toLowerCase() ?? ""
-
-  return blogs
-    .filter((blog) => blog.title.toLowerCase().includes(searchFilter))
-    .sort((a, b) => b.likes - a.likes)
-}
-
-export const getBlogById = (id: number) => {
-  return blogs.find((blog) => blog.id === id)
-}
-
-export const addBlog = (title: string, author: string, url: string, likes: number) => {
-  blogs.push({ id: nextId++, title, author, url, likes })
-}
-
-export const addLike = (id: number) => {
-  const blog = blogs.find((blog) => blog.id === id)
-  if (blog) {
-    blog.likes = blog.likes + 1;
-  }
-}
-
-*/
