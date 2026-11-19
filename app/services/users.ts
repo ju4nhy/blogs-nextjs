@@ -3,7 +3,10 @@ import { db } from "../../db"
 import { users, blogs } from "../../db/schema"
 
 export const getUsers = async () => {
-  return db.query.users.findMany()
+  const result = await db.query.users.findMany()
+  console.log("getUsers fetched:", result.length, result.map((u) => u.username))
+  return result
+  //return db.query.users.findMany()
 }
 
 export const getUserWithBlogs = async (username: string) => {
@@ -12,7 +15,6 @@ export const getUserWithBlogs = async (username: string) => {
     with: { blogs: true },
   })
 }
-
 /*
 export const getUserWithBlogs = async (id: number) => {
   return db.query.users.findFirst({
