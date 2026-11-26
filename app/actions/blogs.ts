@@ -16,6 +16,7 @@ export type BlogFormState = {
     author: string
     url: string
   }
+  success?: boolean
 }
 
 export const createBlog = async (
@@ -51,7 +52,7 @@ export const createBlog = async (
   const likes = Number(formData.get("likes"))
   await addBlog(title, author, url, likes)
   revalidatePath("/blogs")
-  redirect("/blogs")
+  return { success: true }
 }
 
 export const addBlogLike = async (formData: FormData) => {

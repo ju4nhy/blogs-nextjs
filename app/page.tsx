@@ -1,8 +1,8 @@
 const Home = () => {
   return (
-    <div>
+    <div className="max-w-2xl p-6">
       <div>
-        <h2>blogs app</h2>
+        <h2 className="text-2xl font-bold mb-4">Blogs app</h2>
         An example app for{" "}
         <a href="https://courses.mooc.fi/org/uh-cs/courses/full-stack-open-nextjs">
           Full Stack Open Next.js
@@ -10,7 +10,9 @@ const Home = () => {
       </div>
       <div>
         See{" "}
-        <a href="https://github.com/fullstack-hy2020/nextjs-notes">
+        <a 
+        href="https://github.com/fullstack-hy2020/nextjs-notes"
+        className="text-blue-600 hover:underline">
           https://github.com/fullstack-hy2020/nextjs-notes
         </a>{" "}
         for the source code
